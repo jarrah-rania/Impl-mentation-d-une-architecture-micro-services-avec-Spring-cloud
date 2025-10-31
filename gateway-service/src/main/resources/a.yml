@@ -1,0 +1,12 @@
+spring:
+  cloud:
+    gateway:
+      routes:
+        - id: r1
+          uri: lb://ECOM-II-BDCC-APP
+          predicates:
+            Path=/customers/**
+        - id: r2
+          uri: lb://IVENTORY-SERVICE
+          predicates:
+            Path=/api/products/**
