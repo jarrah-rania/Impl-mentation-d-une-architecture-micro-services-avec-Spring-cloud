@@ -29,11 +29,11 @@ public class EcomIiBdccAppApplication {
 					.name("Yassine").email("yassinetaki@gmail.com")
 					.build());
 			customerRespository.findAll().forEach(c->{
-				System.out.println("====================");
-				System.out.println(c.getId());
-				System.out.println(c.getName());
-				System.out.println(c.getEmail());
-				System.out.println("====================");
+						System.out.println("====================");
+						System.out.println(c.getId());
+						System.out.println(c.getName());
+						System.out.println(c.getEmail());
+						System.out.println("====================");
 					}
 
 			);
