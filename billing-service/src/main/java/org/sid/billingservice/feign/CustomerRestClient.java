@@ -6,7 +6,7 @@ import org.springframework.hateoas.PagedModel;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
-@FeignClient(name = "ecom-ii-bdcc-app")
+@FeignClient(name = "ECOM-II-BDCC-APP")
 
 public interface CustomerRestClient {
     @GetMapping("/api/customers/{id}")

@@ -5,8 +5,10 @@ spring:
         - id: r1
           uri: lb://ECOM-II-BDCC-APP
           predicates:
-            Path=/customers/**
+            - Path=/customers/**
+
         - id: r2
           uri: lb://IVENTORY-SERVICE
           predicates:
-            Path=/api/products/**
+            - Path=/api/products/**
+
