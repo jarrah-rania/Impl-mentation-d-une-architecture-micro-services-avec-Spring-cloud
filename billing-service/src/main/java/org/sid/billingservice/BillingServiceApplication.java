@@ -24,6 +24,7 @@ import java.util.Random;
 @EnableDiscoveryClient
 @EnableFeignClients
 public class BillingServiceApplication {
+    private static final Random RANDOM = new Random();
 
     public static void main(String[] args) {
         SpringApplication.run(BillingServiceApplication.class, args);
@@ -48,7 +49,7 @@ public class BillingServiceApplication {
                     ProductItem productItem = ProductItem.builder()
                             .bill(bill)
                             .productId(product.getId())
-                            .quantity(1 + new Random().nextInt(10))
+                            .quantity(1 + RANDOM.nextInt(10))
                             .unitPrice(product.getPrice())
                             .build();
                     productItemRepository.save(productItem);
