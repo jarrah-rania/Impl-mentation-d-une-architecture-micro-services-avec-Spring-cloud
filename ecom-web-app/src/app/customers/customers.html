@@ -1,0 +1,26 @@
+<div class="container">
+  <table class="table" *ngIf="customers">
+    <thead>
+    <tr>
+      <th>ID</th>
+      <th>Name</th>
+      <th>Email</th>
+
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let p of customers._embedded.customers">
+      <td>{{ p.id }}</td>
+      <td>{{ p.name }}</td>
+      <td>{{ p.email }}</td>
+
+
+    </tr>
+    </tbody>
+  </table>
+
+  <!-- Pour debug -->
+  <div *ngIf="customers && (!customers._embedded?.customers || customers._embedded.customers.length === 0)">
+    Debug: products = {{ customers | json }}
+  </div>
+</div>

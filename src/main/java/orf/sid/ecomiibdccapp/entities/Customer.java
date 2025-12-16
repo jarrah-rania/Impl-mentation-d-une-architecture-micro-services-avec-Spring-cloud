@@ -8,7 +8,6 @@ import lombok.*;
 
 @Entity
 @NoArgsConstructor
-
  @Builder
 public class Customer {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)

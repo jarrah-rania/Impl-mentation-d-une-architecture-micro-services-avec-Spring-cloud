@@ -15,3 +15,4 @@ public class RestRespositoryConfig implements RepositoryRestConfigurer {
        config.exposeIdsFor(Product.class);
     }
 }
+

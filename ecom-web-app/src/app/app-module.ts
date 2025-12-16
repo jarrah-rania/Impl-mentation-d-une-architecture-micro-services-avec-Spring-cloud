@@ -1,15 +1,21 @@
 import { NgModule, provideBrowserGlobalErrorListeners, provideZonelessChangeDetection } from '@angular/core';
-import { BrowserModule, provideClientHydration, withEventReplay } from '@angular/platform-browser';
+import { BrowserModule } from '@angular/platform-browser';
+import { HttpClientModule } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing-module';
 import { App } from './app';
 import { Products } from './products/products';
-import {HttpClient, HttpClientModule} from '@angular/common/http';
+import { Customers } from './customers/customers';
+
+import { Bills } from './bills/bills';
+
 
 @NgModule({
   declarations: [
     App,
-    Products
+    Products,
+    Customers,
+    Bills
   ],
   imports: [
     BrowserModule,
@@ -18,8 +24,7 @@ import {HttpClient, HttpClientModule} from '@angular/common/http';
   ],
   providers: [
     provideBrowserGlobalErrorListeners(),
-    provideZonelessChangeDetection(),
-    provideClientHydration(withEventReplay())
+    provideZonelessChangeDetection()
   ],
   bootstrap: [App]
 })

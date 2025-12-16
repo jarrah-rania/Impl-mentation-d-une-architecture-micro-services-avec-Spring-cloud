@@ -6,3 +6,5 @@ import org.springframework.data.rest.core.config.Projection;
 public interface CustomerProjectionEmail {
     String getEmail();
 }
+
+

@@ -7,3 +7,7 @@ public interface CustomerProjection {
     String getName();
     String getEmail();
 }
+
+
+
+

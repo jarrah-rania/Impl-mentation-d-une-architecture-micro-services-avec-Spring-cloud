@@ -1,0 +1,40 @@
+<div class="container">
+    <h2>Factures</h2>
+
+    <table class="table table-striped" *ngIf="bills?._embedded?.bills && bills._embedded.bills.length > 0">
+        <thead class="table-dark">
+        <tr>
+            <th>ID Facture</th>
+            <th>Date</th>
+            <th>ID Client</th>
+            <th>Client</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let bill of bills._embedded.bills">
+            <td>{{ bill._links.self.href.split('/').pop() }}</td>
+            <td>{{ formatDate(bill.billingDate) }}</td>
+            <td>{{ bill.customerId }}</td>
+            <td>
+          <span *ngIf="getCustomerName(bill.customerId)">
+            {{ getCustomerName(bill.customerId) }}
+          </span>
+                <span *ngIf="!getCustomerName(bill.customerId)" class="text-muted">
+            Chargement...
+          </span>
+            </td>
+            <td>
+                <button class="btn btn-info btn-sm" (click)="viewBillDetails(bill)">
+                    Voir Détails
+                </button>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <div *ngIf="bills && (!bills._embedded?.bills || bills._embedded.bills.length === 0)"
+         class="alert alert-warning">
+        Aucune facture trouvée.
+    </div>
+</div>

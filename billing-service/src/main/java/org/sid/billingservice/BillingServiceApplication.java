@@ -26,7 +26,6 @@ import java.util.Random;
 public class BillingServiceApplication {
 
     public static void main(String[] args) {
-
         SpringApplication.run(BillingServiceApplication.class, args);
     }
     @Bean
