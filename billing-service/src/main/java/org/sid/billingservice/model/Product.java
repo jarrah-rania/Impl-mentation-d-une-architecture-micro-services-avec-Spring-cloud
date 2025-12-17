@@ -1,6 +1,4 @@
 package org.sid.billingservice.model;
-
-import jakarta.persistence.Id;
 import lombok.Getter;
 import lombok.Setter;
 
