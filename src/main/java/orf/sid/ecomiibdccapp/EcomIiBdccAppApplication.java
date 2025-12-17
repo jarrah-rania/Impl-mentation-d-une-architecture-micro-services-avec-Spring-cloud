@@ -3,6 +3,8 @@ package orf.sid.ecomiibdccapp;
 import orf.sid.ecomiibdccapp.config.CustomerConfigParams;
 import orf.sid.ecomiibdccapp.entities.Customer;
 import orf.sid.ecomiibdccapp.repository.CustomerRespository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -13,12 +15,16 @@ import org.springframework.context.annotation.Bean;
 @EnableConfigurationProperties(CustomerConfigParams.class)
 public class EcomIiBdccAppApplication {
 
+	private static final Logger log =
+			LoggerFactory.getLogger(EcomIiBdccAppApplication.class);
+
 	public static void main(String[] args) {
 		SpringApplication app = new SpringApplication(EcomIiBdccAppApplication.class);
 
-		// Indique à Spring Boot où se trouvent les fichiers de configuration
 		app.setDefaultProperties(
-				java.util.Collections.singletonMap("spring.config.additional-location", "file:./config-repo/")
+				java.util.Collections.singletonMap(
+						"spring.config.additional-location",
+						"file:./config-repo/")
 		);
 
 		app.run(args);
@@ -39,13 +45,12 @@ public class EcomIiBdccAppApplication {
 					.build());
 
 			customerRespository.findAll().forEach(c -> {
-						System.out.println("====================");
-						System.out.println(c.getId());
-						System.out.println(c.getName());
-						System.out.println(c.getEmail());
-						System.out.println("====================");
-					}
-			);
+				log.info("========== Customer ==========");
+				log.info("Id    : {}", c.getId());
+				log.info("Name  : {}", c.getName());
+				log.info("Email : {}", c.getEmail());
+				log.info("==============================");
+			});
 		};
 	}
 }
