@@ -9,9 +9,9 @@ class ProductTest {
     @Test
     void getId() {
         Product product = new Product();
-        product.setId("1L");
+        product.setId("1");
 
-        assertEquals(1L, product.getId());
+        assertEquals("1", product.getId());
     }
 
     @Test
@@ -41,10 +41,10 @@ class ProductTest {
     @Test
     void setId() {
         Product product = new Product();
-        product.setId("2L");
+        product.setId("2");
 
         assertNotNull(product.getId());
-        assertEquals(2L, product.getId());
+        assertEquals("2", product.getId());
     }
 
     @Test
@@ -90,14 +90,14 @@ class ProductTest {
     @Test
     void builder() {
         Product product = Product.builder()
-                .id("3L")
+                .id("3")
                 .name("Screen")
                 .price(2500.0)
                 .quantity(7)
                 .build();
 
         assertNotNull(product);
-        assertEquals(3L, product.getId());
+        assertEquals("3", product.getId());
         assertEquals("Screen", product.getName());
         assertEquals(2500.0, product.getPrice());
         assertEquals(7, product.getQuantity());
