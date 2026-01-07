@@ -4,6 +4,8 @@ import org.sid.billingservice.entities.Bill;
 import org.sid.billingservice.entities.ProductItem;
 import org.sid.billingservice.feign.CustomerRestClient;
 import org.sid.billingservice.feign.ProductRestClient;
+import org.sid.billingservice.kafka.BillEvent;
+import org.sid.billingservice.kafka.KafkaProducerService;
 import org.sid.billingservice.model.Customer;
 import org.sid.billingservice.model.Product;
 import org.sid.billingservice.repository.BillRepository;
@@ -38,7 +40,8 @@ public class BillingServiceApplication {
     CommandLineRunner commandLineRunner(BillRepository billRepository,
                                         ProductItemRepository productItemRepository,
                                         CustomerRestClient customerRestClient,
-                                        ProductRestClient productRestClient) {
+                                        ProductRestClient productRestClient,
+                                        KafkaProducerService kafkaProducerService) {
         return args -> {
             Collection<Customer> customers = customerRestClient.getAllCustomers().getContent();
             Collection<Product> products = productRestClient.getAllProducts().getContent();
@@ -48,7 +51,17 @@ public class BillingServiceApplication {
                         .billingDate(new Date())
                         .customerId(customer.getId())
                         .build();
-                billRepository.save(bill);
+                Bill savedBill = billRepository.save(bill);
+
+                // Publier l'événement Kafka pour la création de facture
+                BillEvent billEvent = BillEvent.builder()
+                        .billId(savedBill.getId())
+                        .customerId(savedBill.getCustomerId())
+                        .billingDate(savedBill.getBillingDate())
+                        .eventType("CREATED")
+                        .eventTimestamp(new Date())
+                        .build();
+                kafkaProducerService.sendBillEvent(billEvent);
 
                 products.forEach(product -> {
                     ProductItem productItem = ProductItem.builder()

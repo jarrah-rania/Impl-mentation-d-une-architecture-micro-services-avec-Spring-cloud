@@ -1,0 +1,46 @@
+package org.sid.billingservice.kafka;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.kafka.core.KafkaTemplate;
+import org.springframework.kafka.support.SendResult;
+import org.springframework.stereotype.Service;
+
+import java.util.concurrent.CompletableFuture;
+
+@Service
+public class KafkaProducerService {
+
+    private static final Logger logger = LoggerFactory.getLogger(KafkaProducerService.class);
+    private static final String BILL_TOPIC = "bill-events";
+
+    private final KafkaTemplate<String, Object> kafkaTemplate;
+
+    public KafkaProducerService(KafkaTemplate<String, Object> kafkaTemplate) {
+        this.kafkaTemplate = kafkaTemplate;
+    }
+
+    public void sendBillEvent(BillEvent billEvent) {
+        logger.info("Envoi de l'événement Bill: {}", billEvent);
+        
+        CompletableFuture<SendResult<String, Object>> future = 
+            kafkaTemplate.send(BILL_TOPIC, billEvent.getBillId().toString(), billEvent);
+        
+        future.whenComplete((result, ex) -> {
+            if (ex == null) {
+                logger.info("Événement Bill envoyé avec succès: topic={}, partition={}, offset={}",
+                    result.getRecordMetadata().topic(),
+                    result.getRecordMetadata().partition(),
+                    result.getRecordMetadata().offset());
+            } else {
+                logger.error("Erreur lors de l'envoi de l'événement Bill", ex);
+            }
+        });
+    }
+
+    public void sendMessage(String topic, String key, Object message) {
+        logger.info("Envoi du message: topic={}, key={}, message={}", topic, key, message);
+        kafkaTemplate.send(topic, key, message);
+    }
+}
+
